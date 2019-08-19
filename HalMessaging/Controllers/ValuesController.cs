@@ -13,8 +13,9 @@ namespace HalMessaging.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     //[Produces("application/json")]
-    [Consumes("application/json")]
-    [ApiConventionType(typeof(HalApiConventions))]
+    //[Consumes("application/json")]
+    //[ApiConventionType(typeof(HalApiConventions))]
+    [FormatFilter]
     public class ValuesController : ControllerBase
     {
 
@@ -27,10 +28,12 @@ namespace HalMessaging.Controllers
 
 
 
-       /// <summary>
-       /// Get List of Messages
-       /// </summary>
-       /// <returns>Collection of Messages</returns>
+        /// <summary>
+        /// Get List of Messages
+        /// </summary>
+        /// <returns>Collection of Messages</returns>
+      
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Message>))]
         [HttpGet]
         public IEnumerable<Message> Get()
         {
@@ -69,8 +72,8 @@ namespace HalMessaging.Controllers
         /// <returns>Message object</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Message))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult Get(int id)
         {
             var message = _messageService.GetMessage(id);

@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HalMessaging.Bindings;
+using HalMessaging.Contracts;
 using HalMessaging.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -35,22 +37,40 @@ namespace HalMessaging
         {
             services.AddHttpContextAccessor();
             services.AddMiddlewareAnalysis();
-            services.AddMvc(options =>
+     services.AddMvc(options =>
             {
-                options.OutputFormatters.RemoveType<StringOutputFormatter>();
-                options.OutputFormatters.RemoveType<TextOutputFormatter>();
-                options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+                options.Filters.Add(new ConsumesAttribute("application/json"));
+                options.Filters.Add(new ProducesAttribute("application/json"));
+                
+
+
+
+                //options.OutputFormatters.RemoveType<StringOutputFormatter>();
+                //options.OutputFormatters.RemoveType<TextOutputFormatter>();
+                //options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
 
                 options.ReturnHttpNotAcceptable = true;
-                var jsonOutputFormatter = options.OutputFormatters
-                   .OfType<JsonOutputFormatter>().FirstOrDefault();
 
-                if (jsonOutputFormatter != null)
-                {
-                    if (jsonOutputFormatter.SupportedMediaTypes.Contains("text/json"))
-                        jsonOutputFormatter.SupportedMediaTypes.Remove("text/json");
-                                       
-                }
+                //var jsonOutputFormatter = options.OutputFormatters
+                //   .OfType<JsonOutputFormatter>().FirstOrDefault();
+
+                //if (jsonOutputFormatter != null)
+                //{
+                //    if (jsonOutputFormatter.SupportedMediaTypes.Contains("text/json"))
+                //        jsonOutputFormatter.SupportedMediaTypes.Remove("text/json");
+
+                //}
+
+
+
+                options.Filters.Add(new ProducesResponseTypeAttribute(typeof(StatusModel), StatusCodes.Status400BadRequest));
+                options.Filters.Add(new ProducesResponseTypeAttribute(typeof(StatusModel), StatusCodes.Status406NotAcceptable));
+                options.Filters.Add(new ProducesResponseTypeAttribute(typeof(StatusModel), StatusCodes.Status500InternalServerError));
+                options.Filters.Add(new ProducesDefaultResponseTypeAttribute());
+                options.Filters.Add(new ProducesResponseTypeAttribute(typeof(StatusModel), StatusCodes.Status401Unauthorized));
+
+
+
 
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
