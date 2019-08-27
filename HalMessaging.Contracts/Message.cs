@@ -28,4 +28,16 @@ namespace HalMessaging.Contracts
 
 		
 	}
+
+
+    public class FeaturesConfiguration
+    {
+        public bool EnableWeatherForecast { get; set; }
+    }
+
+    public class ForecastConfiguration
+    {
+        public bool EnableWeatherForecast { get; set; }
+    }
+
 }

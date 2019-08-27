@@ -4,14 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace HalMessaging.Controllers
 {
-    [ApiVersion("2.0")]
+   [ApiVersion("0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [ApiConventionType(typeof(DefaultApiConventions))]
-    public class MessagesController : ControllerBase
+    public class MessagesAdminController : ControllerBase
     {
         // GET: api/values
         [HttpGet]

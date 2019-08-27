@@ -58,6 +58,26 @@ namespace HalMessaging.Bindings
                     });
                 }
 
+                //options.SwaggerDoc("Admin", new OpenApiInfo
+                //{
+                //    Version = "0",
+                //    Title = $"HAL.Messaging.System Admin",
+                //    Description = "Messagging System API",
+                //    TermsOfService = new Uri("https://www.huangal.com"),
+                //    Contact = new OpenApiContact
+                //    {
+                //        Name = "Henry Huangal",
+                //        Email = "halford.huangal@gmail.com",
+                //        Url = new Uri("https://www.huangal.com"),
+                //    },
+                //    License = new OpenApiLicense
+                //    {
+                //        Name = "Use under DECH",
+                //        Url = new Uri("https://huangal.com/license"),
+                //    }
+                //});
+
+
                 // Set the comments path for the Swagger JSON and UI.
                 //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -79,7 +99,7 @@ namespace HalMessaging.Bindings
             //configure swagger
             builder.UseSwagger(options =>
             {
-                options.RouteTemplate = "/api-docs/{documentName}/swagger.json";
+               options.RouteTemplate = "/api-docs/{documentName}/swagger.json";
               
             });
 
@@ -90,6 +110,10 @@ namespace HalMessaging.Bindings
                 {
                     options.SwaggerEndpoint($"/api-docs/{desc.GroupName}/swagger.json", desc.GroupName.ToUpperInvariant());
                 }
+
+               // options.SwaggerEndpoint($"/api-docs/Admin/swagger.json", "Admin");
+
+
                 options.RoutePrefix = string.Empty;
 
             });

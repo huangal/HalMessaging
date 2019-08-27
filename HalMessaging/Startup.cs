@@ -37,7 +37,7 @@ namespace HalMessaging
         {
             services.AddHttpContextAccessor();
             services.AddMiddlewareAnalysis();
-     services.AddMvc(options =>
+            services.AddMvc(options =>
             {
                 options.Filters.Add(new ConsumesAttribute("application/json"));
                 options.Filters.Add(new ProducesAttribute("application/json"));
@@ -74,7 +74,7 @@ namespace HalMessaging
 
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.RegisterServices();
+            services.RegisterServices(Configuration);
 
             services.AddSwaggerConfig();
         }
