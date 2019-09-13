@@ -1,23 +1,14 @@
-﻿using System;
-using System.Buffers;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using HalMessaging.Attributes;
 using HalMessaging.Bindings;
 using HalMessaging.Contracts;
-using HalMessaging.Models;
+using HalMessaging.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;             
-using Microsoft.OpenApi.Models;
 
 //[assembly: ApiConventionType(typeof(RestApiConventions))]
 
@@ -35,9 +26,13 @@ namespace HalMessaging
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var data = Configuration.Map<ReceiptConfigurations>();
+            services.AddSingleton(typeof(IDataGenerator<>), typeof(DataGeneratorService<>));
+
             services.AddHttpContextAccessor();
             services.AddMiddlewareAnalysis();
-            services.AddMvc(options =>
+            services.AddMvc(options =>  
             {
                 options.Filters.Add(new ConsumesAttribute("application/json"));
                 options.Filters.Add(new ProducesAttribute("application/json"));

@@ -31,8 +31,15 @@
     <Folder Include="Models\" />
     <Folder Include="OperationFilters\" />
     <Folder Include="Services\" />
+    <Folder Include="Security\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Attributes\" />
+    <Folder Include="Contracts\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HalMessaging.Contracts\HalMessaging.Contracts.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Extensions\ConfigurationMapperExtensions.cs" />
   </ItemGroup>
 </Project>
